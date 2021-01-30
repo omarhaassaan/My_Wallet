@@ -5,6 +5,7 @@ import 'package:my_wallet/components/text_field.dart';
 import 'package:my_wallet/constants.dart';
 import 'package:my_wallet/my_budget.dart';
 import 'package:my_wallet/screens/budget_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {
   static String id = "homepage";
@@ -16,72 +17,80 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final MyBudget budget = MyBudget.instance;
   double amount;
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(auth.currentUser);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.indigo,
         body: MyColumn(
+      children: [
+        Text(
+          'Current Budget: ${budget.currency} ${budget.currentBudget}',
+          style: cScreenText,
+        ),
+        MyTextField(
+          function: (value) {
+            // Check if the input text is double or not
+            try {
+              this.amount = double.parse(value);
+              print(amount);
+            } catch (e) {
+              print(e.toString());
+            }
+          },
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(
-              'Current Budget: ${budget.currency} ${budget.currentBudget}',
-              style: cScreenText,
-            ),
-            MyTextField(
-              function: (value) {
-                // Check if the input text is double or not
-                try {
-                  this.amount = double.parse(value);
-                  print(amount);
-                } catch (e) {
-                  print(e.toString());
-                }
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MyRoundedButton(
-                  child: Icon(
-                    Icons.add,
-                    size: cIconSize,
-                  ),
-                  function: () {
-                    setState(() {
-                      this.budget.addAmount(amount);
-                    });
-                  },
-                  size: cIconSize,
-                ),
-                MyRoundedButton(
-                  child: Icon(
-                    Icons.remove,
-                    size: cIconSize,
-                  ),
-                  function: () {
-                    setState(() {
-                      this.budget.subtractAmount(amount);
-                    });
-                  },
-                  size: cIconSize,
-                ),
-              ],
-            ),
-            MaterialButton(
-              color: cButtonColor,
-              padding: EdgeInsets.all(cIconSize),
-              shape: RoundedBorder,
-              onPressed: () {
-                if (this.budget.currentBudget > 0)
-                  Navigator.pushNamed(context, BudgetPage.id);
-                else
-                  print('Error');
-              },
-              child: Text(
-                'Submit Budget',
-                style: cScreenText,
+            MyRoundedButton(
+              child: Icon(
+                Icons.add,
+                size: cIconSize,
               ),
-            )
+              function: () {
+                setState(() {
+                  this.budget.addAmount(amount);
+                });
+              },
+              size: cIconSize,
+            ),
+            MyRoundedButton(
+              child: Icon(
+                Icons.remove,
+                size: cIconSize,
+              ),
+              function: () {
+                setState(() {
+                  this.budget.subtractAmount(amount);
+                });
+              },
+              size: cIconSize,
+            ),
           ],
-        ));
+        ),
+        MaterialButton(
+          color: cButtonColor,
+          padding: EdgeInsets.all(cIconSize),
+          shape: RoundedBorder,
+          onPressed: () {
+            if (this.budget.currentBudget > 0)
+              Navigator.pushNamed(context, BudgetPage.id);
+            else
+              print('Error');
+          },
+          child: Text(
+            'Submit Budget',
+            style: cScreenText,
+          ),
+        )
+      ],
+    ));
   }
 }

@@ -4,7 +4,6 @@ const double cIconSize = 50;
 const Color cButtonColor = Colors.blue;
 
 const cScreenText = TextStyle(
-  color: Colors.white,
   fontSize: 30,
   fontWeight: FontWeight.w600,
 );
