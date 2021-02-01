@@ -6,6 +6,7 @@ import 'package:my_wallet/constants.dart';
 import 'package:my_wallet/my_budget.dart';
 import 'package:my_wallet/screens/budget_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:my_wallet/local_storage.dart';
 
 class HomePage extends StatefulWidget {
   static String id = "homepage";
@@ -16,14 +17,25 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final MyBudget budget = MyBudget.instance;
-  double amount;
+
+  double amount = 0;
   FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(auth.currentUser);
+    // Update the amount if there is previous amount
+    () async {
+      try {
+        setState(() async {
+          double x = await LocalStorage.readDouble(amountKey);
+          this.budget.addAmount(x);
+        });
+      } catch (e) {
+        print("Cache is empty");
+      }
+    }();
   }
 
   @override
@@ -45,6 +57,8 @@ class _HomePageState extends State<HomePage> {
               print(e.toString());
             }
           },
+          hint: 'Amount',
+          inputType: TextInputType.number,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -57,6 +71,8 @@ class _HomePageState extends State<HomePage> {
               function: () {
                 setState(() {
                   this.budget.addAmount(amount);
+                  LocalStorage.writeDouble(
+                      amountKey, this.budget.currentBudget);
                 });
               },
               size: cIconSize,
@@ -66,10 +82,13 @@ class _HomePageState extends State<HomePage> {
                 Icons.remove,
                 size: cIconSize,
               ),
-              function: () {
+              function: () async {
                 setState(() {
                   this.budget.subtractAmount(amount);
+                  LocalStorage.writeDouble(
+                      amountKey, this.budget.currentBudget);
                 });
+                print("AMOUNT${await LocalStorage.readDouble(amountKey)}++");
               },
               size: cIconSize,
             ),

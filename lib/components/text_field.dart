@@ -3,14 +3,17 @@ import 'package:my_wallet/constants.dart';
 
 class MyTextField extends StatelessWidget {
   final Function function;
-  MyTextField({this.function});
+  final String hint;
+  final TextInputType inputType;
+  MyTextField({this.function, this.hint, this.inputType = TextInputType.text});
   @override
   Widget build(BuildContext context) {
     return TextField(
+      keyboardType: this.inputType,
       style: cScreenText,
       textAlign: TextAlign.center,
-      decoration: cTextFieldDeco,
-      onChanged: function,
+      decoration: cTextFieldDeco.copyWith(hintText: this.hint),
+      onChanged: this.function,
     );
   }
 }

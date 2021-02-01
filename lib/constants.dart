@@ -9,7 +9,7 @@ const cScreenText = TextStyle(
 );
 
 const cTextFieldDeco = InputDecoration(
-  contentPadding: EdgeInsets.symmetric(vertical: 50.0, horizontal: 20.0),
+  contentPadding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
   border: RoundedBorder,
 );
 

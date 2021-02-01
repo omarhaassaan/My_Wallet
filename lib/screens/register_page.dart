@@ -10,7 +10,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  void SignInAnony() async {
+  void signInAnony() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     if (auth.currentUser == null)
       UserCredential userCredential =
@@ -27,7 +27,7 @@ class _RegisterPageState extends State<RegisterPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    SignInAnony();
+    signInAnony();
   }
 
   @override
