@@ -41,6 +41,7 @@ class _BudgetPageState extends State<BudgetPage> {
                 this.amount = double.parse(value);
                 print(amount);
               } catch (e) {
+                this.amount = null;
                 print(e.toString());
               }
             },
@@ -54,10 +55,11 @@ class _BudgetPageState extends State<BudgetPage> {
                 text: 'Add\nPayment',
                 function: () {
                   // Add the payment to the payments list
-                  this.payments.add(Payment(
-                        amount: this.amount,
-                        name: this.paymentName,
-                      ));
+                  if (this.paymentName.isNotEmpty && this.amount != null)
+                    this.payments.add(Payment(
+                          amount: this.amount,
+                          name: this.paymentName,
+                        ));
                 },
               ),
               MyButton(

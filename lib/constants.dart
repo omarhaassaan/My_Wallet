@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const double cIconSize = 50;
+const double cMediumSize = 20;
 const Color cButtonColor = Colors.blue;
 
 const cScreenText = TextStyle(
