@@ -4,8 +4,9 @@ import 'package:my_wallet/constants.dart';
 
 class PaymentsPage extends StatelessWidget {
   final List<Payment> payments;
+  final double budgetAfterPayments;
 
-  PaymentsPage({this.payments});
+  PaymentsPage({this.payments, this.budgetAfterPayments});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +35,25 @@ class PaymentsPage extends StatelessWidget {
                 },
               ),
             ),
+            Card(
+              color: Colors.greenAccent,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Current Budget:',
+                      style: cScreenText,
+                    ),
+                    Text(
+                      this.budgetAfterPayments.toString(),
+                      style: cScreenText,
+                    )
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),

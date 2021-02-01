@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "My Wallet",
       theme: ThemeData.light().copyWith(
-          scaffoldBackgroundColor: Colors.indigo, primaryColor: Colors.red),
+          scaffoldBackgroundColor: Colors.indigo,
+          primaryColor: Colors.blueGrey),
       initialRoute: RegisterPage.id,
       routes: {
         RegisterPage.id: ((context) => RegisterPage()),

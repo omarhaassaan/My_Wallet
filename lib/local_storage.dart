@@ -1,3 +1,4 @@
+import 'package:my_wallet/my_budget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Keys for my wallet application
@@ -45,6 +46,7 @@ class LocalStorage {
 
   static resetStorage() async {
     final _store = await SharedPreferences.getInstance();
+    MyBudget.instance.subtractAmount(MyBudget.instance.currentBudget);
     return await _store.clear();
   }
 }

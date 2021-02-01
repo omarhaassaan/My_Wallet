@@ -21,9 +21,12 @@ class _BudgetPageState extends State<BudgetPage> {
   List<Payment> payments = [];
 
   void updateFromDB() async {
+    // Read names from db
     final List<String> names = await LocalStorage.readStrings(paymentNamesKey);
+    // Read amounts from db
     final List<String> amounts =
         await LocalStorage.readStrings(paymentAmountsKey);
+    // Update current payments by its name and its amount
     for (int i = 0; i < names.length; i++)
       this
           .payments
@@ -40,6 +43,24 @@ class _BudgetPageState extends State<BudgetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Budget'),
+            MaterialButton(
+              onPressed: () {
+                setState(() {
+                  LocalStorage.resetStorage();
+                });
+              },
+              child: Text('RESET'),
+              color: Colors.lightBlue,
+              shape: RoundedBorder,
+            )
+          ],
+        ),
+      ),
       body: MyColumn(
         children: [
           Text(
@@ -96,6 +117,9 @@ class _BudgetPageState extends State<BudgetPage> {
                     list = await LocalStorage.readStrings(paymentAmountsKey);
                     print("Printing Amounts");
                     list.forEach((e) => print(e));
+                    setState(() {
+                      this.budget.subtractAmount(this.amount);
+                    });
                   }
                 },
               ),
@@ -107,6 +131,7 @@ class _BudgetPageState extends State<BudgetPage> {
                     MaterialPageRoute(
                       builder: (context) => PaymentsPage(
                         payments: this.payments,
+                        budgetAfterPayments: this.budget.currentBudget,
                       ),
                     ),
                   );

@@ -20,11 +20,11 @@ class MyBudget {
   }
 
   bool subtractAmount(double a) {
-    LocalStorage.writeDouble(amountKey, _currentBudget);
     if (a > _currentBudget)
       return false;
     else {
       _currentBudget -= a;
+      LocalStorage.writeDouble(amountKey, _currentBudget);
       return true;
     }
   }

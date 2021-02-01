@@ -9,7 +9,7 @@ class MyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       color: cButtonColor,
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(8),
       shape: RoundedBorder,
       onPressed: this.function,
       child: Text(
