@@ -1,3 +1,6 @@
+import 'constants.dart';
+import 'local_storage.dart';
+
 class MyBudget {
   // Set constructor as private
   MyBudget._privateConstructor();
@@ -12,10 +15,12 @@ class MyBudget {
   // Setters
   bool addAmount(double a) {
     _currentBudget += a;
+    LocalStorage.writeDouble(amountKey, _currentBudget);
     return true;
   }
 
   bool subtractAmount(double a) {
+    LocalStorage.writeDouble(amountKey, _currentBudget);
     if (a > _currentBudget)
       return false;
     else {

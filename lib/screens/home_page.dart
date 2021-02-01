@@ -71,8 +71,6 @@ class _HomePageState extends State<HomePage> {
               function: () {
                 setState(() {
                   this.budget.addAmount(amount);
-                  LocalStorage.writeDouble(
-                      amountKey, this.budget.currentBudget);
                 });
               },
               size: cIconSize,
@@ -85,10 +83,7 @@ class _HomePageState extends State<HomePage> {
               function: () async {
                 setState(() {
                   this.budget.subtractAmount(amount);
-                  LocalStorage.writeDouble(
-                      amountKey, this.budget.currentBudget);
                 });
-                print("AMOUNT${await LocalStorage.readDouble(amountKey)}++");
               },
               size: cIconSize,
             ),
